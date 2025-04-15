@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body
-        className={`${poppins.className} bg-gray-200 antialiased`}
+        className={`${poppins.className} bg-background text-foreground antialiased dark`}
         cz-shortcut-listen="true"
       >
         {children}
