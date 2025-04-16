@@ -1,5 +1,5 @@
 import { db } from "@/app/lib/firebase";
-import resend from "@/app/lib/resend";
+//import resend from "@/app/lib/resend";
 import "server-only";
 
 import Stripe from "stripe";
@@ -19,6 +19,9 @@ export async function handleStripPayment(
 
     const userId = metadata?.userId;
 
+    console.log("userId", userId);
+    console.log("userEmail", userEmail);
+
     if (!userId || !userEmail) {
       console.error("User ID or email not found");
       return;
@@ -29,17 +32,17 @@ export async function handleStripPayment(
       subscriptionStatus: "active",
     });
 
-    const { data, error } = await resend.emails.send({
-      from: "Acme <me@example.com>",
-      to: [userEmail],
-      subject: "Pagamento realizado com sucesso",
-      text: "Pagamento realizado com sucesso",
-    });
+    // const { data, error } = await resend.emails.send({
+    //   from: "Acme <me@example.com>",
+    //   to: [userEmail],
+    //   subject: "Pagamento realizado com sucesso",
+    //   text: "Pagamento realizado com sucesso",
+    // });
 
-    if (error) {
-      console.error(error);
-    }
+    // if (error) {
+    //   console.error(error);
+    // }
 
-    console.log(data);
+    // console.log(data);
   }
 }

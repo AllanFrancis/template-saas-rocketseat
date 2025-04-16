@@ -1,5 +1,5 @@
 import { db } from "@/app/lib/firebase";
-import resend from "@/app/lib/resend";
+//import resend from "@/app/lib/resend";
 import "server-only";
 
 import Stripe from "stripe";
@@ -28,17 +28,17 @@ export async function handleStripeSubscription(
       subscriptionStatus: "active",
     });
 
-    const { data, error } = await resend.emails.send({
-      from: "Acme <me@example.com>",
-      to: [userEmail],
-      subject: "Assinatura ativada com sucesso",
-      text: "Assinatura ativada com sucesso",
-    });
+    // const { data, error } = await resend.emails.send({
+    //   from: "Acme <me@example.com>",
+    //   to: [userEmail],
+    //   subject: "Assinatura ativada com sucesso",
+    //   text: "Assinatura ativada com sucesso",
+    // });
 
-    if (error) {
-      console.error(error);
-    }
+    // if (error) {
+    //   console.error(error);
+    // }
 
-    console.log(data);
+    // console.log(data);
   }
 }

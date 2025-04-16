@@ -3,6 +3,7 @@ import { auth } from "@/app/lib/auth";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default async function Dashboard() {
@@ -36,17 +37,21 @@ export default async function Dashboard() {
             </div>
           </div>
 
-          {session?.user?.email && (
-            <form action={handleAuth}>
-              <Button
-                type="submit"
-                variant="default"
-                className="px-4 py-2 mt-4 w-full"
-              >
-                Logout
-              </Button>
-            </form>
-          )}
+          <form action={handleAuth}>
+            <Button
+              type="submit"
+              variant="default"
+              className="px-4 py-2 mt-4 w-full"
+            >
+              Logout
+            </Button>
+          </form>
+
+          <Button asChild variant="outline" className="w-full mt-4">
+            <Link href="/pagamentos" className="w-full">
+              Pagamentos
+            </Link>
+          </Button>
         </CardContent>
       </Card>
     </div>
