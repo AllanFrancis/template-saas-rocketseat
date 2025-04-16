@@ -5,13 +5,13 @@ import { Poppins } from "next/font/google";
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
-  subsets: ['latin']
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: 'Template SaaS Rocketseat',
-  description: 'Landing page',
-}
+  title: "Template SaaS Rocketseat",
+  description: "Landing page",
+};
 
 export default function RootLayout({
   children,
@@ -20,9 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body
-        className={`${poppins.className} bg-gray-100 antialiased`}
-      >
+      <body cz-shortcut-listen="true" className={`${poppins.className} bg-gray-100 antialiased`}>
         {children}
       </body>
     </html>
