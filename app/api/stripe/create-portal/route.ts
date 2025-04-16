@@ -36,10 +36,7 @@ export async function POST(req: NextRequest) {
 
     // Verifica se o ID do cliente no Stripe está presente. Caso contrário, retorna um erro.
     if (!customerId) {
-      return NextResponse.json(
-        { error: "Customer not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Customer not found" }, { status: 404 });
     }
 
     // Cria uma sessão no portal de faturamento do Stripe para o cliente

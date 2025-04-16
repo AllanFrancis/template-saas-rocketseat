@@ -56,10 +56,7 @@ export async function POST(req: NextRequest) {
 
     // Verifica se a URL da sessão foi gerada. Caso contrário, retorna um erro.
     if (!session.url) {
-      return NextResponse.json(
-        { error: "Session URL not found" },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: "Session URL not found" }, { status: 500 });
     }
 
     // Retorna o ID da sessão criada com status 200 (sucesso)

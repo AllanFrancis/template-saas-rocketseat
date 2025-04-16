@@ -14,19 +14,13 @@ const secret = process.env.STRIPE_WEBHOOK_SECRET;
 // Função que lida com requisições POST enviadas pelo webhook do Stripe
 export async function POST(req: NextRequest) {
   try {
-    // Lê o corpo da requisição como texto
     const body = await req.text();
-    // Obtém os cabeçalhos da requisição
     const headersList = await headers();
-    // Obtém a assinatura do Stripe enviada no cabeçalho
     const signature = headersList.get("stripe-signature");
 
     // Verifica se a assinatura ou o segredo estão ausentes. Caso estejam, retorna um erro.
     if (!signature || !secret) {
-      return NextResponse.json(
-        { error: "No signature or secret" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "No signature or secret" }, { status: 400 });
     }
 
     // Constrói o evento do Stripe usando o corpo, a assinatura e o segredo
@@ -48,21 +42,15 @@ export async function POST(req: NextRequest) {
         break;
 
       case "checkout.session.expired": // Sessão de pagamento expirou
-        console.log(
-          "Enviar um email para o usuário avisando que o pagamento expirou."
-        );
+        console.log("Enviar um email para o usuário avisando que o pagamento expirou.");
         break;
 
       case "checkout.session.async_payment_succeeded": // Pagamento via boleto realizado com sucesso
-        console.log(
-          "Enviar um email para o usuário avisando que o pagamento foi realizado"
-        );
+        console.log("Enviar um email para o usuário avisando que o pagamento foi realizado");
         break;
 
       case "checkout.session.async_payment_failed": // Pagamento via boleto falhou
-        console.log(
-          "Enviar um email para o usuário avisando que o pagamento falhou."
-        );
+        console.log("Enviar um email para o usuário avisando que o pagamento falhou.");
         break;
 
       case "customer.subscription.created": // Assinatura criada
@@ -82,9 +70,6 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     // Em caso de erro, exibe o erro no console e retorna uma resposta de erro genérica
     console.error(error);
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

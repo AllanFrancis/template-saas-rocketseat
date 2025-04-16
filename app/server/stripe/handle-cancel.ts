@@ -4,17 +4,12 @@ import "server-only";
 
 import Stripe from "stripe";
 
-export async function handleStripeCancelSubscription(
-  event: Stripe.CustomerSubscriptionDeletedEvent
-) {
+export async function handleStripeCancelSubscription(event: Stripe.CustomerSubscriptionDeletedEvent) {
   console.log("Cancelou a assinatura");
 
   const customerId = event.data.object.customer;
 
-  const userRef = await db
-    .collection("users")
-    .where("stripeCustomerId", "==", customerId)
-    .get();
+  const userRef = await db.collection("users").where("stripeCustomerId", "==", customerId).get();
 
   if (!userRef) {
     console.error("User not found");

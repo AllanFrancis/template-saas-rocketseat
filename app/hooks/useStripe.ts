@@ -6,9 +6,7 @@ export function useStripe() {
 
   useEffect(() => {
     async function loadStripeAsync() {
-      const stripeInstance = await loadStripe(
-        process.env.NEXT_PUBLIC_STRIPE_PUB_KEY!
-      );
+      const stripeInstance = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUB_KEY!);
       setStripe(stripeInstance);
     }
 
