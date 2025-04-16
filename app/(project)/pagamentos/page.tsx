@@ -1,6 +1,7 @@
-"use client";
-import { useStripe } from "@/app/hooks/useStripe";
-import { Button } from "@/components/ui/button";
+'use client';
+
+import useMercadoPago from "@/app/hooks/useMercadoPago";
+import { useStripe } from '@/app/hooks/useStripe';
 
 export default function Pagamentos() {
   const {
@@ -8,34 +9,30 @@ export default function Pagamentos() {
     createSubscriptionStripeCheckout,
     handleCreateStripePortal,
   } = useStripe();
+
+  const { createMercadoPagoCheckout } = useMercadoPago();
+
   return (
-    <div className="flex flex-col items-center justify-center w-full h-screen gap-4">
-      <h1 className="text-2xl font-bold">Pagamentos</h1>
-      <p className="text-lg">Essa página está em construção.</p>
-
-      <Button
-        onClick={() =>
-          createPaymentStripeCheckout({
-            testeId: "123",
-          })
-        }
+    <div className="flex flex-col gap-10 items-center justify-center h-screen">
+      <h1 className="text-4xl font-bold">Pagamentos</h1>
+      <button className="border rounded-md px-1" onClick={() => createPaymentStripeCheckout({ testeId: '123' })}>
+        Criar Pagamento Stripe
+      </button>
+      <button
+        className="border rounded-md px-1"
+        onClick={() => createSubscriptionStripeCheckout({ testeId: '123' })}
       >
-        Criar pagamento Stripe
-      </Button>
-
-      <Button
-        onClick={() =>
-          createSubscriptionStripeCheckout({
-            testeId: "123",
-          })
-        }
-      >
-        Criar assinatura Stripe
-      </Button>
-
-      <Button onClick={handleCreateStripePortal}>
-        Criar portal de pagamentos
-      </Button>
+        Criar Assinatura Stripe
+      </button>
+      <button className="border rounded-md px-1" onClick={handleCreateStripePortal}>
+        Criar Portal de Pagamento
+      </button>
+      <button className="border rounded-md px-1" onClick={() => createMercadoPagoCheckout({
+        testeId: '123',
+        userEmail: 'teste@gmail.com'
+      })}>
+        Criar Pagamento Mercado Pago
+      </button>
     </div>
   );
 }

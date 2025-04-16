@@ -1,17 +1,17 @@
-import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+// import type { Metadata } from "next";
+import { Metadata } from "next";
 import "./globals.css";
+import { Poppins } from "next/font/google";
 
 const poppins = Poppins({
-  variable: "--font-poppins",
   weight: ["400", "500", "600", "700"],
-  subsets: ["latin"],
+  subsets: ['latin']
 });
 
 export const metadata: Metadata = {
-  title: "Template Saas",
-  description: "Template para criação de aplicações SaaS",
-};
+  title: 'Template SaaS Rocketseat',
+  description: 'Landing page',
+}
 
 export default function RootLayout({
   children,
@@ -21,8 +21,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body
-        className={`${poppins.className} bg-background text-foreground antialiased dark`}
-        cz-shortcut-listen="true"
+        className={`${poppins.className} bg-gray-100 antialiased`}
       >
         {children}
       </body>

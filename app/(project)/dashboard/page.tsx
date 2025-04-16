@@ -1,59 +1,34 @@
 import { handleAuth } from "@/app/actions/handle-auth";
-import { auth } from "@/app/lib/auth";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { auth } from '@/app/lib/auth';
+import { Metadata } from "next";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { redirect } from 'next/navigation';
+
+export const metadata: Metadata = {
+  title: 'Dashboard',
+  description: 'Dashboard',
+}
 
 export default async function Dashboard() {
+  // Estamos no lado do servidor!!!
   const session = await auth();
 
   if (!session) {
-    redirect("/login");
+    redirect('/login');
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen space-y-6">
-      <div className="flex flex-col items-center justify-center mb-4">
-        <h1 className="text-4xl font-bold">Desafio Micro Saas</h1>
-        <p>NextJS, Auth.JS, Firestore, Stripe e Mercado Pago</p>
-      </div>
-
-      <Card className="flex flex-col items-center justify-center ">
-        <CardContent className="flex flex-col justify-center">
-          <div className="flex items-center space-x-4">
-            <Avatar className="w-16 h-16">
-              <AvatarImage
-                src={session?.user?.image ?? "/default-image.png"}
-                alt="User Image"
-                className="rounded-full"
-              />
-            </Avatar>
-
-            <div className="flex flex-col">
-              <p>{session?.user?.name}</p>
-              <p>{session?.user?.email}</p>
-            </div>
-          </div>
-
-          <form action={handleAuth}>
-            <Button
-              type="submit"
-              variant="default"
-              className="px-4 py-2 mt-4 w-full"
-            >
-              Logout
-            </Button>
-          </form>
-
-          <Button asChild variant="outline" className="w-full mt-4">
-            <Link href="/pagamentos" className="w-full">
-              Pagamentos
-            </Link>
-          </Button>
-        </CardContent>
-      </Card>
+    <div className="flex flex-col gap-10 items-center justify-center h-screen">
+      <h1 className="text-4xl font-bold">Protected Dashboard</h1>
+      <p>{session?.user?.email ? session?.user?.email : 'Usuário não esta logado!!!'}</p>
+      {session.user?.email && (
+        <form action={handleAuth}>
+          <button type="submit" className="border rounded-md px-2 py-1 cursor-pointer">
+            Logout
+          </button>
+        </form>
+      )}
+      <Link href="/pagamentos">Pagamentos</Link>
     </div>
   );
 }

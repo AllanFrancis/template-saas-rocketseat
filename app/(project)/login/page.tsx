@@ -1,15 +1,20 @@
 import { handleAuth } from "@/app/actions/handle-auth";
-import { Button } from "@/components/ui/button";
+import { auth } from "@/app/lib/auth";
+import { redirect } from "next/navigation";
 
-export default function Login() {
+export default async function Login() {
+  const session = await auth();
+
+  if (session) {
+    redirect("/dashboard");
+  }
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <h1 className="text-4xl font-bold mb-4">Login</h1>
+    <div className="flex flex-col items-center justify-center h-screen">
+      <h1 className="text-4xl font-bold mb-10">Login</h1>
       <form action={handleAuth}>
-        <Button type="submit" className="px-4 py-2 rounded-3xl">
-          Signin with Google
-        </Button>
+        <button type="submit" className="border rounded-md px-2 py-1 cursor-pointer">Signin with Google</button>
       </form>
     </div>
-  );
+  )
 }

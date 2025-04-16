@@ -1,15 +1,18 @@
-import { Button } from "@/components/ui/button";
+import { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: 'Template SaaS Rocketseat',
+  description: 'Landing page',
+}
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen space-y-4">
+    <div className="flex flex-col items-center justify-center h-screen">
       <h1 className="text-4xl font-bold">Landing Page</h1>
-      <Link href="/dashboard">
-        <Button className="px-4 py-2 rounded-3xl">
-          accessar pagina de login
-        </Button>
+      <Link href="/login">
+        <button>Login</button>
       </Link>
     </div>
-  );
+  )
 }
