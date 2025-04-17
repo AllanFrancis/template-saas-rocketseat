@@ -12,10 +12,11 @@ export async function handleStripPayment(event: Stripe.CheckoutSessionCompletedE
     const userEmail = customer_email || customer_details?.email;
     const userId = metadata?.userId;
 
-    console.log("metadata ========", metadata);
+    event.data.object;
 
+    console.log("metadata ========", metadata);
     console.log("userEmail ========", userEmail);
-    console.log("userId ========", userId);
+    console.log("userId ======== HANDLE PAY", userId);
 
     if (!userId || !userEmail) {
       console.error("User ID or email not found");
@@ -28,7 +29,7 @@ export async function handleStripPayment(event: Stripe.CheckoutSessionCompletedE
     });
 
     const { data, error } = await resend.emails.send({
-      from: "Acme <me@example.com>",
+      from: "Acme <me@tatamepro.com.br>",
       to: [userEmail],
       subject: "Pagamento realizado com sucesso",
       text: "Pagamento realizado com sucesso",

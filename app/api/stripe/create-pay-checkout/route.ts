@@ -1,8 +1,14 @@
+import { auth } from "@/app/lib/auth";
 import stripe from "@/app/lib/stripe";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  const { testeId, userEmail, userId } = await req.json();
+  const { testeId, userEmail } = await req.json();
+
+  const session = await auth();
+  const userId = session?.user?.id;
+
+  console.log("userId ======== CREATE-PAY", userId);
 
   const price = process.env.STRIPE_PRODUCT_PRICE_ID;
 

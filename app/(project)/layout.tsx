@@ -20,10 +20,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR">
-      <body cz-shortcut-listen="true" className={`${poppins.className} bg-gray-100 antialiased`}>
-        <SessionProvider>{children}</SessionProvider>
-      </body>
-    </html>
+    <SessionProvider>
+      <html lang="pt-BR">
+        <body cz-shortcut-listen="true" className={`${poppins.className} bg-gray-100 antialiased`}>
+          {children}
+        </body>
+      </html>
+    </SessionProvider>
   );
 }

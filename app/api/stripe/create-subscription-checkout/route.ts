@@ -4,7 +4,7 @@ import { getOrCreateCustomer } from "@/app/server/stripe/get-or-create-customer"
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  const { testeId } = await req.json();
+  const { testeId, userEmail } = await req.json();
 
   const price = process.env.STRIPE_SUBSCRIPTION_PRICE_ID;
 
@@ -14,7 +14,8 @@ export async function POST(req: NextRequest) {
 
   const session = await auth();
   const userId = session?.user?.id;
-  const userEmail = session?.user?.email;
+
+  console.log("userId ======== SUBSCRIPITION", userId);
 
   if (!userId || !userEmail) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -25,8 +26,8 @@ export async function POST(req: NextRequest) {
   const metadata = {
     testeId,
     price,
-    userId,
     userEmail,
+    userId,
   };
 
   // Precisamos criar um cliente NA STRIPE para ter referência dele quando for criar o portal

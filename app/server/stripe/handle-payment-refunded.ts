@@ -4,22 +4,20 @@ import "server-only";
 
 import Stripe from "stripe";
 
-export async function handleStripeCancelSubscription(event: Stripe.CustomerSubscriptionDeletedEvent) {
-  console.log("Cancelou a assinatura");
+export async function handleStripeRefundPayment(event: Stripe.ChargeRefundedEvent) {
+  console.log("Estornou o pagamento");
 
-  const customerId = event.data.object.customer;
+  const userEmail = event.data.object.billing_details?.email;
+  const userRef = await db.collection("users").where("email", "==", userEmail).get();
 
-  console.log("customerId ========", customerId);
-
-  const userRef = await db.collection("users").where("stripeCustomerId", "==", customerId).get();
-
-  if (!userRef) {
+  if (!userEmail || !userRef) {
     console.error("User not found");
     return;
   }
 
   const userId = userRef.docs[0].id;
-  const userEmail = userRef.docs[0].data().email;
+
+  console.log("userId ========", userId);
 
   await db.collection("users").doc(userId).update({
     subscriptionStatus: "inactive",
@@ -28,8 +26,8 @@ export async function handleStripeCancelSubscription(event: Stripe.CustomerSubsc
   const { data, error } = await resend.emails.send({
     from: "Template Saas <me@tatamepro.com.br>",
     to: [userEmail],
-    subject: "Assinatura cancelada com sucesso",
-    text: "Assinatura cancelada com sucesso",
+    subject: "Pagamento foi estornado",
+    text: "Pagamento foi estornado e sua fatura cancelada",
   });
 
   if (error) {

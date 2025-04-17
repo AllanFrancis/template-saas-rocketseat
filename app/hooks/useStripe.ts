@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 interface StripeCheckoutData {
   testeId: string;
   userEmail: string;
-  userId: string;
 }
 
 export function useStripe() {

@@ -8,4 +8,4 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: FirestoreAdapter({
     credential: firebaseCert,
   }),
-})
+});

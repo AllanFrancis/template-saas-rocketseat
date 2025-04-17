@@ -1,6 +1,7 @@
 import stripe from "@/app/lib/stripe";
 import { handleStripeCancelSubscription } from "@/app/server/stripe/handle-cancel";
 import { handleStripPayment } from "@/app/server/stripe/handle-payment";
+import { handleStripeRefundPayment } from "@/app/server/stripe/handle-payment-refunded";
 import { handleStripeSubscription } from "@/app/server/stripe/handle-subscription";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
@@ -41,6 +42,9 @@ export async function POST(req: NextRequest) {
         break;
       case "customer.subscription.created": // Criou assinatura
         console.log("Mensagem de boas vindas porque acabou de assinar");
+        break;
+      case "charge.refunded": // Reembolso
+        await handleStripeRefundPayment(event);
         break;
       case "customer.subscription.deleted": // Cancelou a assinatura
         await handleStripeCancelSubscription(event);
