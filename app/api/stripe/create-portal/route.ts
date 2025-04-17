@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const userRef = db.collection('users').doc(userId);
+    const userRef = db.collection("users").doc(userId);
     const userDoc = await userRef.get();
 
     if (!userDoc.exists) {
@@ -28,12 +28,12 @@ export async function POST(req: NextRequest) {
 
     const portalSession = await stripe.billingPortal.sessions.create({
       customer: customerId,
-      return_url: `${req.headers.get('origin')}/`
-    })
+      return_url: `${req.headers.get("origin")}/`,
+    });
 
     return NextResponse.json({ url: portalSession.url });
   } catch (error) {
     console.error(error);
-    return NextResponse.error()
+    return NextResponse.error();
   }
 }
